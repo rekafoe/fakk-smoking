@@ -97,7 +97,7 @@ export const en: Dictionary = {
     lifeHint: "Estimated health time",
   },
   footer: {
-    brand: "fakksmoking",
+    brand: "BUCCI STUDIO",
     center: "No nicotine. No excuses.",
     right: "You are smoke free",
   },

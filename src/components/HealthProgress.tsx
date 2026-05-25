@@ -15,7 +15,7 @@ export function HealthProgress({
   const { t } = useI18n();
 
   return (
-    <div className="health-block">
+    <section className="glass-card glass-card--module health-block">
       <div className="health-block__header">
         <LungsIcon />
         <p className="health-block__title">{t("health.title")}</p>
@@ -35,6 +35,6 @@ export function HealthProgress({
         </div>
         <span className="health-block__percent">{percent}%</span>
       </div>
-    </div>
+    </section>
   );
 }

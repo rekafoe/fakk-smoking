@@ -9,7 +9,7 @@ export function DailyQuote({ days }: { days: number }) {
   const quote = getDailyQuote(days, locale);
 
   return (
-    <blockquote className="quote-block">
+    <blockquote className="glass-card glass-card--module quote-block">
       <span className="quote-block__day">
         {t("daily.quoteEyebrow", { day: dayNumber })}
       </span>

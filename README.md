@@ -28,11 +28,14 @@ npm run dev
 
 ## Переменные окружения
 
-Скопируйте `.env.example` в `.env`:
+| Среда | Файл-шаблон |
+|-------|-------------|
+| Локально | `.env.example` → `.env` |
+| Vercel Production | [env/vercel.production.env.example](env/vercel.production.env.example) |
+| Vercel Preview | [env/vercel.preview.env.example](env/vercel.preview.env.example) |
+| Railway Postgres | [env/railway.postgres.env.example](env/railway.postgres.env.example) (что копировать в Vercel) |
 
-- `DATABASE_URL` — PostgreSQL (`postgresql://...`)
-- `NEXTAUTH_SECRET` — длинная случайная строка
-- `NEXTAUTH_URL` — `http://localhost:3000` локально; на Vercel — URL продакшена
+Подробно: [docs/env-variables.md](docs/env-variables.md).
 
 ## Деплой (продакшен)
 
@@ -48,3 +51,4 @@ npm run dev
 - [docs/deploy-railway-vercel.md](docs/deploy-railway-vercel.md)
 - [docs/domain.md](docs/domain.md)
 - [docs/typical-tasks.md](docs/typical-tasks.md)
+- [docs/env-variables.md](docs/env-variables.md)

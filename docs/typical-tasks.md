@@ -2,7 +2,7 @@
 
 ## Фоновый дым (BackgroundEffects)
 
-Реализация: Canvas 2D в `src/lib/smoke-canvas.ts` + `BackgroundEffects.tsx`. Параметры wisps (количество, скорость, opacity) — в `smoke-canvas.ts`. Стили слоя: `BackgroundEffects.module.css` (opacity, blur, vignette).
+Реализация: фото-слои `smoke-layer.png` в `BackgroundEffects.module.css` (keyframes `smokeRise*` — подъём вверх + лёгкий дрейф вбок) + тонкий Canvas в `src/lib/smoke-canvas.ts` (wisps с отрицательным `vy`). Параметры wisps — в `smoke-canvas.ts`.
 
 `prefers-reduced-motion`: статичный кадр, без `requestAnimationFrame`.
 
@@ -11,6 +11,18 @@
 ## Сменить фон
 
 Фон страницы — `--color-bg` в `globals.css` (`.app-shell::before`). Картинка `bg-smoke.png` не используется.
+
+## Прозрачность glass-модулей
+
+Общие токены в `:root` (`globals.css`): `--glass-bg`, `--glass-blur`, `--color-glass-border`.
+
+Классы:
+
+- `.glass-card` / `.glass-surface` — базовая frosted-панель
+- `.glass-card--module` — компактные блоки (цитата, healing, stats)
+- `.glass-card--counter` — обёртка счётчика; цифры в `.day-display__face` (отдельный blur)
+
+Компоненты с `glass-card`: `DayCounter`, `DailyQuote`, `HealthProgress`, `StatsPanel`, `DailyArticle`. Футер: `.site-footer.glass-surface` (только верхняя граница, без скругления). Auth/modals — чуть плотнее для читаемости.
 
 ## Добавить цитату
 

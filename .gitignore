@@ -1,6 +1,9 @@
 node_modules
 .next
 .env
+.env.vercel
+.env.vercel.local
+env/*.local
 *.db
 *.db-journal
 .DS_Store
@@ -9,3 +12,4 @@ node_modules
 agent-transcripts/
 terminals/
 mcps/
+assets/c__Users_*/

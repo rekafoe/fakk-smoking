@@ -9,7 +9,7 @@ export function DailyArticle({ days }: { days: number }) {
   const dayNumber = getContentDayNumber(days);
 
   return (
-    <article className="daily-article" aria-labelledby="daily-article-title">
+    <article className="glass-card daily-article" aria-labelledby="daily-article-title">
       <header className="daily-article__header">
         <p className="daily-article__eyebrow">
           {t("daily.articleEyebrow", { day: dayNumber })}

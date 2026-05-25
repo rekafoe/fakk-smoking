@@ -16,7 +16,7 @@ flowchart LR
 
 1. [railway.app](https://railway.app) → **New Project** → **Provision PostgreSQL**
 2. Откройте сервис Postgres → **Variables** (или **Connect**)
-3. Скопируйте **`DATABASE_URL`** (публичный URL с SSL для Vercel)
+3. Скопируйте **`DATABASE_URL`** или **`DATABASE_PUBLIC_URL`** (публичный URL с SSL для Vercel) — см. [env/railway.postgres.env.example](../env/railway.postgres.env.example)
 4. По желанию включите **backups** в настройках плана
 
 Формат URL:
@@ -51,7 +51,8 @@ npm run dev
 ## 3. Vercel: проект и переменные
 
 1. Импортируйте репозиторий на [vercel.com](https://vercel.com) (Framework: **Next.js**)
-2. **Settings → Environment Variables** (Production, Preview, Development по необходимости):
+2. Шаблоны в репозитории: [env/vercel.production.env.example](../env/vercel.production.env.example), [env/vercel.preview.env.example](../env/vercel.preview.env.example). Справка по Railway: [env/railway.postgres.env.example](../env/railway.postgres.env.example). Таблица: [env-variables.md](env-variables.md).
+3. **Settings → Environment Variables** (Production, Preview по необходимости):
 
 | Переменная | Значение |
 |------------|----------|
@@ -59,7 +60,7 @@ npm run dev
 | `NEXTAUTH_SECRET` | длинная случайная строка (`openssl rand -base64 32`) |
 | `NEXTAUTH_URL` | `https://<your-app>.vercel.app` или ваш домен |
 
-3. Сборка задаётся в `vercel.json`:
+4. Сборка задаётся в `vercel.json`:
 
 ```json
 "buildCommand": "prisma migrate deploy && prisma generate && next build"
@@ -67,7 +68,7 @@ npm run dev
 
 `npm run build` локально — только `prisma generate && next build` (без миграций, если нет БД).
 
-4. **Deploy** — при первом деплое Prisma применит `prisma/migrations/*` к Railway.
+5. **Deploy** — при первом деплое Prisma применит `prisma/migrations/*` к Railway.
 
 ## 4. Первый деплой (чеклист)
 

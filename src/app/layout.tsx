@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, IBM_Plex_Mono, Oswald } from "next/font/google";
+import { Anton, Barlow_Condensed, IBM_Plex_Mono } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import "@/app/globals.css";
 
-const oswald = Oswald({
-  subsets: ["latin"],
+const barlow = Barlow_Condensed({
+  subsets: ["latin", "latin-ext"],
   variable: "--font-ui",
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const bebas = Bebas_Neue({
-  subsets: ["latin"],
+const anton = Anton({
+  subsets: ["latin", "latin-ext"],
   variable: "--font-display",
   weight: "400",
 });
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${oswald.variable} ${bebas.variable} ${mono.variable}`}>
+    <html lang="en" className={`${barlow.variable} ${anton.variable} ${mono.variable}`}>
       <body>
         <Providers>{children}</Providers>
       </body>

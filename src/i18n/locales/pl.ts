@@ -54,7 +54,7 @@ export const pl: Dictionary = {
     lifeHint: "Szacowany czas dla zdrowia",
   },
   footer: {
-    brand: "fakksmoking",
+    brand: "BUCCI STUDIO",
     center: "Bez nikotyny. Bez wymówek.",
     right: "Jesteś wolny od dymu",
   },

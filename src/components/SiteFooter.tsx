@@ -7,7 +7,7 @@ export function SiteFooter() {
   const { t } = useI18n();
 
   return (
-    <footer className="site-footer">
+    <footer className="site-footer glass-surface">
       <span>{t("footer.brand")}</span>
       <span className="site-footer__center">{t("footer.center")}</span>
       <span className="site-footer__right">

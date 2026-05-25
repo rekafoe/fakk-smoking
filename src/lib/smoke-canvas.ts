@@ -107,9 +107,9 @@ function createWisps(width: number, height: number, count: number, accent?: bool
 
       y: hash(i * 2.7) * height,
 
-      vx: (hash(i * 4.2) - 0.5) * 0.014 * LAYER_SPEED[layer],
+      vx: (hash(i * 4.2) - 0.5) * 0.007 * LAYER_SPEED[layer],
 
-      vy: (-0.004 - hash(i * 5.8) * 0.011) * LAYER_SPEED[layer],
+      vy: (-0.009 - hash(i * 5.8) * 0.014) * LAYER_SPEED[layer],
 
       radius: minDim * baseR * layerMul * (0.88 + hash(i * 11.3) * 0.24),
 
@@ -144,9 +144,9 @@ function createWisps(width: number, height: number, count: number, accent?: bool
 
       y: height * (0.15 + hash(h * 3.3) * 0.7),
 
-      vx: (hash(h * 4.4) - 0.5) * 0.006,
+      vx: (hash(h * 4.4) - 0.5) * 0.004,
 
-      vy: -0.003 - hash(h * 5.1) * 0.005,
+      vy: -0.007 - hash(h * 5.1) * 0.008,
 
       radius: minDim * (0.38 + hash(h * 6.2) * 0.22),
 
@@ -182,21 +182,19 @@ function turbulence(w: Wisp, time: number, width: number, height: number): { dx:
 
   const dx =
 
-    (Math.sin(slow * 0.9 + p) * width * 0.0011 +
+    (Math.sin(slow * 0.9 + p) * width * 0.00075 +
 
-      Math.sin(slow * 0.41 + p * 1.6) * width * 0.00065 +
-
-      Math.sin(slow * 0.17 + p * 2.8) * width * 0.00035) *
+      Math.sin(slow * 0.41 + p * 1.6) * width * 0.00042) *
 
     amp;
 
   const dy =
 
-    (Math.cos(slow * 0.72 + p * 0.55) * height * 0.00085 +
+    (-height * 0.00042 +
 
-      Math.sin(slow * 0.28 + p * 2) * height * 0.0005 +
+      Math.sin(slow * 0.55 + p * 0.9) * height * 0.00038 +
 
-      Math.cos(slow * 0.11 + p * 1.3) * height * 0.00028) *
+      Math.cos(slow * 0.22 + p * 2.1) * height * 0.00022) *
 
     amp;
 
@@ -353,9 +351,9 @@ function updateWisps(wisps: Wisp[], width: number, height: number, dt: number, m
 
     if (w.x > width + margin) w.x = -margin * 0.5;
 
-    if (w.y < -margin) w.y = height + margin;
+    if (w.y < -margin) w.y = height + margin * 0.35;
 
-    if (w.y > height + margin) w.y = -margin * 0.5;
+    if (w.y > height + margin) w.y = -margin * 0.35;
 
   }
 
