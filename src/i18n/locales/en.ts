@@ -46,7 +46,7 @@ export type Dictionary = {
 
 export const en: Dictionary = {
   meta: {
-    title: "fakksmoking — quit tracker",
+    title: "fuck smoke — quit tracker",
     description: "Track days without nicotine, healing progress, and emergency craving support.",
   },
   language: {

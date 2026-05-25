@@ -6,7 +6,8 @@
 - **NextAuth v4** (Credentials) — сессии JWT, email + пароль; API route `runtime: nodejs`
 - **Prisma + PostgreSQL** — пользователи, `quitDate`, `RelapseEvent` (прод: Railway; локально: Docker Postgres или та же БД)
 - **CSS** — один `globals.css`, без inline-стилей
-- **Шрифты** (Google via `layout.tsx`): **Barlow Condensed** — UI/цитаты; **Anton** — счётчик, заголовки, stats; **IBM Plex Mono** — таймер emergency
+- **Шрифты** (Google via `layout.tsx`): **Inter** — UI; **Anton** — счётчик, заголовки, stats; **IBM Plex Mono** — таймер emergency
+- **Фон** — tiers `full` / `lite` / `static` ([`motion-profile.ts`](../src/lib/motion-profile.ts), [`BackgroundEffects.tsx`](../src/components/BackgroundEffects.tsx))
 
 ## Поток данных
 

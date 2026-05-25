@@ -41,7 +41,7 @@ export function StatsPanel({ profile }: { profile: ProfileSnapshot }) {
     <section className="stats-panel" aria-label={t("stats.aria")}>
       <ul className="stats-panel__grid">
         {items.map((item) => (
-          <li key={item.label} className="glass-card stats-panel__card">
+          <li key={item.label} className="glass-card glass-card--tile stats-panel__card">
             <p className="stats-panel__label">{item.label}</p>
             <p className="stats-panel__value">{item.value}</p>
             <p className="stats-panel__hint">{item.hint}</p>

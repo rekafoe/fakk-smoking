@@ -4,6 +4,8 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { BrandLightFlashes } from "@/components/BrandLightFlashes";
+import { GlitchTitle } from "@/components/GlitchTitle";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useI18n } from "@/components/LocaleProvider";
 
@@ -56,66 +58,72 @@ export function AuthForm({ mode }: { mode: Mode }) {
   }
 
   return (
-    <div className="auth-card">
-      <div className="auth-card__lang">
-        <LanguageSwitcher />
+    <div className="auth-layout">
+      <div className="auth-layout__brand">
+        <BrandLightFlashes />
+        <GlitchTitle />
       </div>
-      <h1>{mode === "login" ? t("auth.signIn") : t("auth.register")}</h1>
-      <p>{mode === "login" ? t("auth.signInHint") : t("auth.registerHint")}</p>
-      <form className="auth-form" onSubmit={handleSubmit}>
-        {mode === "register" ? (
+      <div className="auth-card glass-card">
+        <div className="auth-card__lang">
+          <LanguageSwitcher />
+        </div>
+        <h1>{mode === "login" ? t("auth.signIn") : t("auth.register")}</h1>
+        <p>{mode === "login" ? t("auth.signInHint") : t("auth.registerHint")}</p>
+        <form className="auth-form" onSubmit={handleSubmit}>
+          {mode === "register" ? (
+            <label>
+              {t("auth.nameOptional")}
+              <input
+                type="text"
+                autoComplete="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </label>
+          ) : null}
           <label>
-            {t("auth.nameOptional")}
+            {t("auth.email")}
             <input
-              type="text"
-              autoComplete="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              type="email"
+              required
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </label>
-        ) : null}
-        <label>
-          {t("auth.email")}
-          <input
-            type="email"
-            required
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-        <label>
-          {t("auth.password")}
-          <input
-            type="password"
-            required
-            minLength={8}
-            autoComplete={mode === "login" ? "current-password" : "new-password"}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        {error ? <p className="auth-form__error">{error}</p> : null}
-        <button type="submit" className="btn btn--primary" disabled={loading}>
-          {loading
-            ? t("auth.pleaseWait")
-            : mode === "login"
-              ? t("auth.signIn")
-              : t("auth.register")}
-        </button>
-      </form>
-      <p className="auth-card__switch">
-        {mode === "login" ? (
-          <>
-            {t("auth.noAccount")}{" "}
-            <Link href="/register">{t("auth.register")}</Link>
-          </>
-        ) : (
-          <>
-            {t("auth.hasAccount")} <Link href="/login">{t("auth.signIn")}</Link>
-          </>
-        )}
-      </p>
+          <label>
+            {t("auth.password")}
+            <input
+              type="password"
+              required
+              minLength={8}
+              autoComplete={mode === "login" ? "current-password" : "new-password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </label>
+          {error ? <p className="auth-form__error">{error}</p> : null}
+          <button type="submit" className="btn btn--primary" disabled={loading}>
+            {loading
+              ? t("auth.pleaseWait")
+              : mode === "login"
+                ? t("auth.signIn")
+                : t("auth.register")}
+          </button>
+        </form>
+        <p className="auth-card__switch">
+          {mode === "login" ? (
+            <>
+              {t("auth.noAccount")}{" "}
+              <Link href="/register">{t("auth.register")}</Link>
+            </>
+          ) : (
+            <>
+              {t("auth.hasAccount")} <Link href="/login">{t("auth.signIn")}</Link>
+            </>
+          )}
+        </p>
+      </div>
     </div>
   );
 }

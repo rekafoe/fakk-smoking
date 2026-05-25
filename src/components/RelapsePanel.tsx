@@ -72,7 +72,7 @@ export function RelapsePanel({
   if (step === "done") {
     return (
       <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="relapse-done-title">
-        <div className="modal-panel">
+        <div className="modal-panel glass-card">
           <div className="modal-panel__header">
             <h2 id="relapse-done-title" className="modal-panel__title">
               {t("relapse.doneTitle")}
@@ -90,7 +90,7 @@ export function RelapsePanel({
 
   return (
     <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="relapse-title">
-      <div className="modal-panel">
+      <div className="modal-panel glass-card">
         <div className="modal-panel__header">
           <h2 id="relapse-title" className="modal-panel__title">
             {t("relapse.title")}

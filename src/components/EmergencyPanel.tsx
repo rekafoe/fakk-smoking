@@ -63,7 +63,7 @@ export function EmergencyPanel({
 
   return (
     <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="emergency-title">
-      <div className="modal-panel">
+      <div className="modal-panel glass-card">
         <div className="modal-panel__header">
           <h2 id="emergency-title" className="modal-panel__title">
             {t("emergency.title")}

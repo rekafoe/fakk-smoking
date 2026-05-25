@@ -6,7 +6,7 @@ import "@/app/globals.css";
 const barlow = Barlow_Condensed({
   subsets: ["latin", "latin-ext"],
   variable: "--font-ui",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
 });
 
 const anton = Anton({
@@ -22,8 +22,14 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "fakksmoking — quit tracker",
+  title: "fuck smoke — quit tracker",
   description: "Track days without nicotine, healing progress, and emergency craving support.",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

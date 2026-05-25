@@ -2,7 +2,9 @@
 
 ## Фоновый дым (BackgroundEffects)
 
-Реализация: фото-слои `smoke-layer.png` в `BackgroundEffects.module.css` (keyframes `smokeRise*` — подъём вверх + лёгкий дрейф вбок) + тонкий Canvas в `src/lib/smoke-canvas.ts` (wisps с отрицательным `vy`). Параметры wisps — в `smoke-canvas.ts`.
+Реализация: фото-слои `smoke-layer.png` + опциональный canvas. Вспышки только у лого: [`BrandLightFlashes.tsx`](../src/components/BrandLightFlashes.tsx) в `dashboard-header__brand`. Профили: `full` / `lite` / `static` — [`motion-profile.ts`](../src/lib/motion-profile.ts), [`BackgroundEffects.tsx`](../src/components/BackgroundEffects.tsx). `lite` только при узком экране или `prefers-reduced-data` (не по числу CPU). Стекло без blur: тинт и отлив на `::before` / кант на `::after` (`globals.css`).
+
+Стек: фото-дым `z-index: 0` → UI `z-index: 1` → canvas-акцент `z-index: 2` (`SmokeCanvasOverlay`, screen blend над UI).
 
 `prefers-reduced-motion`: статичный кадр, без `requestAnimationFrame`.
 
@@ -10,19 +12,31 @@
 
 ## Сменить фон
 
-Фон страницы — `--color-bg` в `globals.css` (`.app-shell::before`). Картинка `bg-smoke.png` не используется.
+Фон страницы — `--color-bg` на `html`/`body` в `globals.css`. Картинка `bg-smoke.png` не используется.
 
 ## Прозрачность glass-модулей
 
-Общие токены в `:root` (`globals.css`): `--glass-bg`, `--glass-blur`, `--color-glass-border`.
+Общие токены в `:root` (`globals.css`): `--glass-tint`, `--color-glass-border`.
 
 Классы:
 
-- `.glass-card` / `.glass-surface` — базовая frosted-панель
+- `.glass-card` / `.glass-surface` — прозрачное стекло: лёгкий тинт на `::before` (без кантов, без `backdrop-filter`)
 - `.glass-card--module` — компактные блоки (цитата, healing, stats)
-- `.glass-card--counter` — обёртка счётчика; цифры в `.day-display__face` (отдельный blur)
+- `.glass-card--counter` — квадратная карточка (`aspect-ratio: 1`); `.day-display__face` — квадратный прозрачный flip-clock, цифра `88cqh`
 
-Компоненты с `glass-card`: `DayCounter`, `DailyQuote`, `HealthProgress`, `StatsPanel`, `DailyArticle`. Футер: `.site-footer.glass-surface` (только верхняя граница, без скругления). Auth/modals — чуть плотнее для читаемости.
+Компоненты с `glass-card`: `DayCounter`, `DailyQuote`, `HealthProgress`, `StatsPanel`, `DailyArticle`, `AuthForm`, модалки (`EmergencyPanel`, `SettingsPanel`, `RelapsePanel`), `ProfileOnboarding`. Футер: `.site-footer.glass-surface` (только верхняя граница, без скругления). Оверлей модалок/onboarding — `--overlay-scrim` (по умолчанию `rgba(0,0,0,0.72)`); поля форм — прозрачный тинт как у кнопок (`.auth-form` / `.onboarding-form`).
+
+## Мобильная вёрстка
+
+Breakpoints в `globals.css` и `GlitchTitle.module.css`:
+
+- **≤820px** — одна колонка: счётчик → цитата/healing → stats → статья
+- **≤640px** — шапка столбиком, язык на всю ширину, кнопки 2×1, уменьшенные отступы, `safe-area`, скрыт `cigarette-accent`, stats 2×2
+- **≤480px** — stats в одну колонку, кнопки шапки и crisis-actions на всю ширину
+
+`layout.tsx`: `export const viewport` (device-width). На узком экране `motion-profile` даёт `lite` (меньше дыма, без canvas).
+
+Появление блоков дашборда: `reveal-up` в `globals.css` (шапка → кнопки → счётчик → сайдбар → stats → статья), отключается при `prefers-reduced-motion`.
 
 ## Добавить цитату
 

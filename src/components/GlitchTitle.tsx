@@ -1,16 +1,30 @@
 "use client";
 
-export const SITE_BRAND = "fakksmoking";
+import styles from "./GlitchTitle.module.css";
 
-export function GlitchTitle({ text = SITE_BRAND }: { text?: string }) {
+export const SITE_BRAND_LINE1 = "FUCK";
+export const SITE_BRAND_LINE2 = "SMOKE";
+
+export function GlitchTitle() {
   return (
-    <h1 className="glitch-title" data-text={text}>
-      <span className="glitch-title__text glitch-title__text--base">{text}</span>
-      <span className="glitch-title__text glitch-title__text--red" aria-hidden="true">
-        {text}
+    <h1 className={styles.title} aria-label="fuck smoke">
+      <span className={styles.line} data-text={SITE_BRAND_LINE1}>
+        <span className={styles.word}>{SITE_BRAND_LINE1}</span>
+        <span className={styles.slice} aria-hidden="true">
+          {SITE_BRAND_LINE1}
+        </span>
+        <span className={`${styles.slice} ${styles.sliceAlt}`} aria-hidden="true">
+          {SITE_BRAND_LINE1}
+        </span>
       </span>
-      <span className="glitch-title__text glitch-title__text--cyan" aria-hidden="true">
-        {text}
+      <span className={styles.line} data-text={SITE_BRAND_LINE2}>
+        <span className={styles.word}>{SITE_BRAND_LINE2}</span>
+        <span className={styles.slice} aria-hidden="true">
+          {SITE_BRAND_LINE2}
+        </span>
+        <span className={`${styles.slice} ${styles.sliceAlt}`} aria-hidden="true">
+          {SITE_BRAND_LINE2}
+        </span>
       </span>
     </h1>
   );

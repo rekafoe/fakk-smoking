@@ -52,3 +52,5 @@ npm run dev
 - [docs/domain.md](docs/domain.md)
 - [docs/typical-tasks.md](docs/typical-tasks.md)
 - [docs/env-variables.md](docs/env-variables.md)
+- [docs/auth-improvement-plan.md](docs/auth-improvement-plan.md)
+- [docs/client-feedback.md](docs/client-feedback.md)

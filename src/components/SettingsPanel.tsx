@@ -83,7 +83,7 @@ export function SettingsPanel({
 
   return (
     <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="settings-title">
-      <div className="modal-panel">
+      <div className="modal-panel glass-card">
         <div className="modal-panel__header">
           <h2 id="settings-title" className="modal-panel__title">
             {t("settings.title")}
@@ -98,7 +98,7 @@ export function SettingsPanel({
             {t("settings.slipped")}
           </button>
         ) : null}
-        <form className="onboarding-form" onSubmit={handleSubmit}>
+        <form className="onboarding-form auth-form" onSubmit={handleSubmit}>
           <ProfileFormFields
             values={values}
             onChange={(patch) => setValues((v) => (v ? { ...v, ...patch } : v))}

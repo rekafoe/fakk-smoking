@@ -1,15 +1,14 @@
 "use client";
 
 import { SessionProvider } from "next-auth/react";
-import { BackgroundEffects } from "@/components/BackgroundEffects";
 import { LocaleProvider } from "@/components/LocaleProvider";
+import { ViewportScene } from "@/components/ViewportScene";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
       <LocaleProvider>
-        <BackgroundEffects />
-        {children}
+        <ViewportScene>{children}</ViewportScene>
       </LocaleProvider>
     </SessionProvider>
   );

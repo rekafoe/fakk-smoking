@@ -1,11 +1,7 @@
 "use client";
 
+import { CurrencySwitcher } from "@/components/CurrencySwitcher";
 import { useI18n } from "@/components/LocaleProvider";
-
-const CURRENCIES = [
-  { code: "PLN", label: "zł PLN" },
-  { code: "EUR", label: "€ EUR" },
-] as const;
 
 export type ProfileFormValues = {
   quitDate: string;
@@ -76,16 +72,10 @@ export function ProfileFormFields({
       </label>
       <label>
         {t("profileForm.currency")}
-        <select
+        <CurrencySwitcher
           value={values.currency}
-          onChange={(e) => onChange({ currency: e.target.value })}
-        >
-          {CURRENCIES.map((c) => (
-            <option key={c.code} value={c.code}>
-              {c.label}
-            </option>
-          ))}
-        </select>
+          onChange={(currency) => onChange({ currency })}
+        />
       </label>
     </>
   );

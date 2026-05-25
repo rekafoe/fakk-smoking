@@ -73,10 +73,10 @@ export function ProfileOnboarding() {
 
   return (
     <div className="onboarding-overlay">
-      <div className="onboarding-card onboarding-card--wide">
+      <div className="onboarding-card onboarding-card--wide glass-card">
         <h2>{title}</h2>
         <p>{description}</p>
-        <form className="onboarding-form" onSubmit={handleSubmit}>
+        <form className="onboarding-form auth-form" onSubmit={handleSubmit}>
           <ProfileFormFields
             values={values}
             onChange={(patch) => setValues((v) => ({ ...v, ...patch }))}

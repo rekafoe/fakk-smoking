@@ -1,0 +1,234 @@
+/* Glitch title: white-on-black, two stacked words, horizontal streak glitch */
+
+.title {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.15rem, 5.2vw, 3.85rem);
+  font-weight: 400;
+  line-height: 0.86;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.line {
+  position: relative;
+  display: block;
+  overflow: visible;
+  white-space: nowrap;
+}
+
+.line + .line {
+  margin-top: 0.02em;
+}
+
+.word {
+  position: relative;
+  z-index: 3;
+  display: inline-block;
+  color: #fff;
+  text-shadow:
+    -3px 0 0 rgba(255, 255, 255, 0.85),
+    -6px 0 0 rgba(255, 255, 255, 0.55),
+    -10px 0 0 rgba(255, 255, 255, 0.32),
+    -14px 0 0 rgba(255, 255, 255, 0.18),
+    -18px 0 0 rgba(255, 255, 255, 0.08),
+    0 0 24px rgba(255, 255, 255, 0.08);
+}
+
+/* Horizontal slice duplicates — streak left */
+.slice {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #fff;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.92;
+  animation: glitchHStreak 4.2s infinite steps(1);
+}
+
+.sliceAlt {
+  z-index: 1;
+  opacity: 0.65;
+  animation-name: glitchHStreakAlt;
+  animation-duration: 3.4s;
+}
+
+.line::before,
+.line::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #fff;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.line::before {
+  z-index: 4;
+  clip-path: inset(0 0 52% 0);
+  transform: translate3d(-7px, 0, 0);
+  animation: glitchBandTop 3.2s infinite steps(1);
+}
+
+.line::after {
+  z-index: 4;
+  clip-path: inset(48% 0 0 0);
+  transform: translate3d(-5px, 0, 0);
+  animation: glitchBandBottom 2.6s infinite steps(1);
+}
+
+.line {
+  isolation: isolate;
+}
+
+@keyframes glitchHStreak {
+  0%,
+  86%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    clip-path: inset(0 0 0 0);
+    opacity: 0;
+  }
+
+  87% {
+    transform: translate3d(-11px, 0, 0);
+    clip-path: inset(8% 0 78% 0);
+    opacity: 0.95;
+  }
+
+  88% {
+    transform: translate3d(-18px, 1px, 0);
+    clip-path: inset(32% 0 48% 0);
+    opacity: 0.8;
+  }
+
+  89% {
+    transform: translate3d(-9px, -1px, 0);
+    clip-path: inset(62% 0 18% 0);
+    opacity: 0.9;
+  }
+
+  90% {
+    transform: translate3d(-14px, 0, 0);
+    clip-path: inset(78% 0 6% 0);
+    opacity: 0.7;
+  }
+}
+
+@keyframes glitchHStreakAlt {
+  0%,
+  82%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    clip-path: inset(0 0 0 0);
+    opacity: 0;
+  }
+
+  83% {
+    transform: translate3d(-16px, 0, 0);
+    clip-path: inset(18% 0 68% 0);
+    opacity: 0.75;
+  }
+
+  84% {
+    transform: translate3d(-8px, 0, 0);
+    clip-path: inset(44% 0 38% 0);
+    opacity: 0.85;
+  }
+
+  85% {
+    transform: translate3d(-20px, 0, 0);
+    clip-path: inset(70% 0 12% 0);
+    opacity: 0.6;
+  }
+}
+
+@keyframes glitchBandTop {
+  0%,
+  88%,
+  100% {
+    transform: translate3d(-6px, 0, 0);
+  }
+
+  89% {
+    transform: translate3d(-14px, -1px, 0);
+  }
+
+  90% {
+    transform: translate3d(-4px, 1px, 0);
+  }
+
+  91% {
+    transform: translate3d(-19px, 0, 0);
+  }
+}
+
+@keyframes glitchBandBottom {
+  0%,
+  84%,
+  100% {
+    transform: translate3d(-5px, 0, 0);
+  }
+
+  85% {
+    transform: translate3d(-12px, 1px, 0);
+  }
+
+  86% {
+    transform: translate3d(-22px, 0, 0);
+  }
+
+  87% {
+    transform: translate3d(-7px, -1px, 0);
+  }
+}
+
+@media (max-width: 640px) {
+  .title {
+    font-size: clamp(1.85rem, 10vw, 2.65rem);
+    letter-spacing: 0.03em;
+  }
+
+  .word {
+    text-shadow:
+      -2px 0 0 rgba(255, 255, 255, 0.55),
+      -5px 0 0 rgba(255, 255, 255, 0.28),
+      0 0 16px rgba(255, 255, 255, 0.06);
+  }
+}
+
+@media (max-width: 380px) {
+  .title {
+    font-size: clamp(1.55rem, 9.5vw, 2.1rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slice,
+  .sliceAlt,
+  .line::before,
+  .line::after {
+    animation: none;
+  }
+
+  .line::before {
+    transform: translate3d(-6px, 0, 0);
+    opacity: 0.85;
+  }
+
+  .line::after {
+    transform: translate3d(-5px, 0, 0);
+    opacity: 0.8;
+  }
+
+  .word {
+    text-shadow:
+      -4px 0 0 rgba(255, 255, 255, 0.5),
+      -8px 0 0 rgba(255, 255, 255, 0.25);
+  }
+}

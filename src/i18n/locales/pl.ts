@@ -2,7 +2,7 @@ import type { Dictionary } from "@/i18n/locales/en";
 
 export const pl: Dictionary = {
   meta: {
-    title: "fakksmoking — tracker rzucania",
+    title: "fuck smoke — tracker rzucania",
     description:
       "Licz dni bez nikotyny, śledź regenerację i korzystaj z pomocy przy głodzie papierosa.",
   },

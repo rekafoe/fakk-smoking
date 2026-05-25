@@ -15,7 +15,7 @@ export function HealthProgress({
   const { t } = useI18n();
 
   return (
-    <section className="glass-card glass-card--module health-block">
+    <section className="health-block">
       <div className="health-block__header">
         <LungsIcon />
         <p className="health-block__title">{t("health.title")}</p>

@@ -7,6 +7,7 @@ import { DailyQuote } from "@/components/DailyQuote";
 import { DayCounter } from "@/components/DayCounter";
 import { EmergencyPanel } from "@/components/EmergencyPanel";
 import { RelapsePanel } from "@/components/RelapsePanel";
+import { BrandLightFlashes } from "@/components/BrandLightFlashes";
 import { GlitchTitle } from "@/components/GlitchTitle";
 import { HealthProgress } from "@/components/HealthProgress";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -46,6 +47,7 @@ export function Dashboard() {
       <div className="app-shell__content">
         <header className="dashboard-header">
           <div className="dashboard-header__brand">
+            <BrandLightFlashes />
             <GlitchTitle />
           </div>
           <div className="dashboard-header__actions">
