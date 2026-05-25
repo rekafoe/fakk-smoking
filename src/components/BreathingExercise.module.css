@@ -1,0 +1,300 @@
+.root {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.visual {
+  position: relative;
+  width: 168px;
+  height: 168px;
+  margin: 0 auto 1rem;
+  display: grid;
+  place-items: center;
+}
+
+.halo {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.04) 42%,
+    transparent 68%
+  );
+  opacity: 0.55;
+  transform: scale(0.92);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.visual[data-phase="inhale"] .halo {
+  opacity: 0.85;
+  transform: scale(1.08);
+  animation: halo-inhale 4s ease-in-out forwards;
+}
+
+.visual[data-phase="hold"] .halo {
+  opacity: 0.72;
+  transform: scale(1.06);
+  animation: halo-hold-pulse 4s ease-in-out infinite;
+}
+
+.visual[data-phase="exhale"] .halo {
+  opacity: 0.35;
+  transform: scale(0.9);
+  animation: halo-exhale 6s ease-in-out forwards;
+}
+
+.visual[data-phase="inhale"][data-duration="4"] .halo {
+  animation-duration: 4s;
+}
+
+.visual[data-phase="hold"][data-duration="4"] .halo {
+  animation-duration: 4s;
+}
+
+.visual[data-phase="exhale"][data-duration="6"] .halo {
+  animation-duration: 6s;
+}
+
+.ring {
+  position: absolute;
+  inset: 4px;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+.ringTrack {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 2;
+}
+
+.ringProgress {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 439.82;
+  stroke-dashoffset: 439.82;
+  animation: ring-progress linear forwards;
+}
+
+.visual[data-phase="inhale"][data-duration="4"] .ringProgress {
+  animation-duration: 4s;
+}
+
+.visual[data-phase="hold"][data-duration="4"] .ringProgress {
+  animation-duration: 4s;
+  stroke: rgba(255, 255, 255, 0.42);
+}
+
+.visual[data-phase="exhale"][data-duration="6"] .ringProgress {
+  animation-duration: 6s;
+  stroke: rgba(255, 255, 255, 0.32);
+}
+
+.circle {
+  position: relative;
+  z-index: 1;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.32);
+  background: rgba(8, 8, 8, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  will-change: transform, border-color, box-shadow, color;
+}
+
+.visual[data-phase="inhale"] .circle {
+  animation: circle-inhale 4s ease-in-out forwards;
+}
+
+.visual[data-phase="hold"] .circle {
+  animation: circle-hold 4s ease-in-out infinite;
+}
+
+.visual[data-phase="exhale"] .circle {
+  animation: circle-exhale 6s ease-in-out forwards;
+}
+
+.visual[data-phase="inhale"][data-duration="4"] .circle {
+  animation-duration: 4s;
+}
+
+.visual[data-phase="hold"][data-duration="4"] .circle {
+  animation-duration: 4s;
+}
+
+.visual[data-phase="exhale"][data-duration="6"] .circle {
+  animation-duration: 6s;
+}
+
+.seconds {
+  font-variant-numeric: tabular-nums;
+}
+
+.phaseLabel {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  animation: phase-fade 0.45s ease both;
+}
+
+@keyframes circle-inhale {
+  from {
+    transform: scale(0.88);
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    color: rgba(220, 220, 220, 0.85);
+  }
+  to {
+    transform: scale(1.14);
+    border-color: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 0 28px rgba(255, 255, 255, 0.18);
+    color: #fff;
+  }
+}
+
+@keyframes circle-hold {
+  0%,
+  100% {
+    transform: scale(1.14);
+    border-color: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 0 22px rgba(255, 255, 255, 0.12);
+  }
+  50% {
+    transform: scale(1.18);
+    border-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 32px rgba(255, 255, 255, 0.16);
+  }
+}
+
+@keyframes circle-exhale {
+  from {
+    transform: scale(1.14);
+    border-color: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.95);
+  }
+  to {
+    transform: scale(0.84);
+    border-color: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    color: rgba(180, 180, 180, 0.75);
+  }
+}
+
+@keyframes halo-inhale {
+  from {
+    opacity: 0.45;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 0.9;
+    transform: scale(1.12);
+  }
+}
+
+@keyframes halo-hold-pulse {
+  0%,
+  100% {
+    opacity: 0.68;
+    transform: scale(1.04);
+  }
+  50% {
+    opacity: 0.82;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes halo-exhale {
+  from {
+    opacity: 0.72;
+    transform: scale(1.06);
+  }
+  to {
+    opacity: 0.28;
+    transform: scale(0.86);
+  }
+}
+
+@keyframes ring-progress {
+  from {
+    stroke-dashoffset: 439.82;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes phase-fade {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .halo,
+  .circle,
+  .ringProgress,
+  .phaseLabel {
+    animation: none !important;
+  }
+
+  .visual[data-phase="inhale"] .circle {
+    transform: scale(1.1);
+    border-color: rgba(255, 255, 255, 0.85);
+    color: #fff;
+  }
+
+  .visual[data-phase="hold"] .circle {
+    transform: scale(1.12);
+    border-color: rgba(255, 255, 255, 0.75);
+  }
+
+  .visual[data-phase="exhale"] .circle {
+    transform: scale(0.88);
+    border-color: rgba(255, 255, 255, 0.28);
+    color: rgba(200, 200, 200, 0.8);
+  }
+
+  .visual[data-phase="inhale"] .halo {
+    opacity: 0.75;
+    transform: scale(1.04);
+  }
+
+  .visual[data-phase="hold"] .halo {
+    opacity: 0.65;
+    transform: scale(1.02);
+  }
+
+  .visual[data-phase="exhale"] .halo {
+    opacity: 0.35;
+    transform: scale(0.92);
+  }
+
+  .ringProgress {
+    stroke-dashoffset: 0;
+  }
+
+  .phaseLabel {
+    opacity: 1;
+    transform: none;
+  }
+}
