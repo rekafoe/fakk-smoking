@@ -6,14 +6,11 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useState,
   type ReactNode,
 } from "react";
-import { useSession } from "next-auth/react";
 import {
   DEFAULT_LOCALE,
   getDictionary,
-  isLocale,
   replaceParams,
   type Dictionary,
   type Locale,
@@ -22,7 +19,6 @@ import {
 type I18nContextValue = {
   locale: Locale;
   dict: Dictionary;
-  setLocale: (locale: Locale) => Promise<void>;
   t: (key: string, params?: Record<string, string | number>) => string;
 };
 
@@ -37,48 +33,12 @@ function resolvePath(dict: Dictionary, path: string): unknown {
   }, dict);
 }
 
-export function LocaleProvider({
-  children,
-  initialLocale,
-}: {
-  children: ReactNode;
-  initialLocale?: string | null;
-}) {
-  const { data: session, update } = useSession();
-  const sessionLocale = session?.user?.locale;
-  const [locale, setLocaleState] = useState<Locale>(() => {
-    if (sessionLocale && isLocale(sessionLocale)) return sessionLocale;
-    if (initialLocale && isLocale(initialLocale)) return initialLocale;
-    return DEFAULT_LOCALE;
-  });
-
-  const effectiveLocale =
-    sessionLocale && isLocale(sessionLocale) ? sessionLocale : locale;
-
-  const dict = useMemo(() => getDictionary(effectiveLocale), [effectiveLocale]);
+export function LocaleProvider({ children }: { children: ReactNode }) {
+  const dict = useMemo(() => getDictionary(DEFAULT_LOCALE), []);
 
   useEffect(() => {
-    document.documentElement.lang = effectiveLocale;
-  }, [effectiveLocale]);
-
-  const setLocale = useCallback(
-    async (next: Locale) => {
-      setLocaleState(next);
-      document.documentElement.lang = next;
-      if (session?.user) {
-        const res = await fetch("/api/profile", {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ locale: next }),
-        });
-        if (res.ok) {
-          const data = await res.json();
-          await update(data);
-        }
-      }
-    },
-    [session?.user, update],
-  );
+    document.documentElement.lang = DEFAULT_LOCALE;
+  }, []);
 
   const t = useCallback(
     (key: string, params?: Record<string, string | number>) => {
@@ -92,8 +52,8 @@ export function LocaleProvider({
   );
 
   const value = useMemo(
-    () => ({ locale: effectiveLocale, dict, setLocale, t }),
-    [effectiveLocale, dict, setLocale, t],
+    () => ({ locale: DEFAULT_LOCALE, dict, t }),
+    [dict, t],
   );
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;

@@ -2,12 +2,12 @@
 
 import styles from "./GlitchTitle.module.css";
 
-export const SITE_BRAND_LINE1 = "FUCK";
-export const SITE_BRAND_LINE2 = "SMOKE";
+export const SITE_BRAND_LINE1 = "Fuck";
+export const SITE_BRAND_LINE2 = "smoking";
 
 export function GlitchTitle() {
   return (
-    <h1 className={styles.title} aria-label="fuck smoke">
+    <h1 className={styles.title} aria-label="Fuck smoking">
       <span className={styles.line} data-text={SITE_BRAND_LINE1}>
         <span className={styles.word}>{SITE_BRAND_LINE1}</span>
         <span className={styles.slice} aria-hidden="true">

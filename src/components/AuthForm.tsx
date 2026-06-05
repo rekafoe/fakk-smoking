@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { BrandLightFlashes } from "@/components/BrandLightFlashes";
 import { GlitchTitle } from "@/components/GlitchTitle";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useI18n } from "@/components/LocaleProvider";
 
 type Mode = "login" | "register";
@@ -64,9 +63,6 @@ export function AuthForm({ mode }: { mode: Mode }) {
         <GlitchTitle />
       </div>
       <div className="auth-card glass-card">
-        <div className="auth-card__lang">
-          <LanguageSwitcher />
-        </div>
         <h1>{mode === "login" ? t("auth.signIn") : t("auth.register")}</h1>
         <p>{mode === "login" ? t("auth.signInHint") : t("auth.registerHint")}</p>
         <form className="auth-form" onSubmit={handleSubmit}>

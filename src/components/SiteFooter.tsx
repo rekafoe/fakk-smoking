@@ -11,7 +11,7 @@ export function SiteFooter() {
       <span>{t("footer.brand")}</span>
       <span className="site-footer__center">{t("footer.center")}</span>
       <span className="site-footer__right">
-        {t("footer.right")}
+        <span className="site-footer__right-text">{t("footer.right")}</span>
         <GlobeIcon />
       </span>
     </footer>

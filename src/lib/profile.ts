@@ -1,4 +1,4 @@
-import { DEFAULT_LOCALE, isLocale, type Locale } from "@/i18n";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n";
 
 export const SUPPORTED_CURRENCIES = ["PLN", "EUR"] as const;
 export type SupportedCurrency = (typeof SUPPORTED_CURRENCIES)[number];
@@ -39,7 +39,7 @@ export function profileFromDb(user: {
     pricePerPack: user.pricePerPack,
     cigarettesPerPack: user.cigarettesPerPack,
     currency: normalizeCurrency(user.currency),
-    locale: isLocale(user.locale) ? user.locale : DEFAULT_LOCALE,
+    locale: DEFAULT_LOCALE,
   };
 }
 

@@ -233,7 +233,7 @@ function buildArticles(lang) {
 
 mkdirSync(outDir, { recursive: true });
 
-for (const lang of ["en", "pl"]) {
+for (const lang of ["en"]) {
   writeFileSync(
     join(outDir, `daily-quotes.${lang}.json`),
     JSON.stringify(buildQuotes(lang)),
@@ -246,4 +246,4 @@ for (const lang of ["en", "pl"]) {
   );
 }
 
-console.log("Generated EN and PL daily quotes and articles (365 each).");
+console.log("Generated EN daily quotes and articles (365 each).");

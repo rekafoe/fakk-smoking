@@ -3,7 +3,7 @@
 import { useMotionProfileValue } from "@/components/MotionProfileProvider";
 import styles from "./BrandLightFlashes.module.css";
 
-/** Soft light bursts only behind the FUCK / SMOKE logo. */
+/** Soft light bursts only behind the Fuck / smoking logo. */
 export function BrandLightFlashes() {
   const profile = useMotionProfileValue();
 

@@ -4,9 +4,9 @@ import { useI18n } from "@/components/LocaleProvider";
 import { getContentDayNumber, getDailyQuote } from "@/lib/daily-content";
 
 export function DailyQuote({ days }: { days: number }) {
-  const { locale, t } = useI18n();
+  const { t } = useI18n();
   const dayNumber = getContentDayNumber(days);
-  const quote = getDailyQuote(days, locale);
+  const quote = getDailyQuote(days);
 
   return (
     <blockquote className="quote-block">

@@ -1,20 +1,17 @@
 import { en, type Dictionary } from "@/i18n/locales/en";
 
 export type { Dictionary };
-import { pl } from "@/i18n/locales/pl";
 
-export const LOCALES = ["en", "pl"] as const;
+export const LOCALES = ["en"] as const;
 export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "en";
 
-const dictionaries: Record<Locale, Dictionary> = { en, pl };
-
 export function isLocale(value: string): value is Locale {
-  return LOCALES.includes(value as Locale);
+  return value === DEFAULT_LOCALE;
 }
 
-export function getDictionary(locale: Locale): Dictionary {
-  return dictionaries[locale] ?? dictionaries[DEFAULT_LOCALE];
+export function getDictionary(_locale: Locale = DEFAULT_LOCALE): Dictionary {
+  return en;
 }
 
 export function replaceParams(

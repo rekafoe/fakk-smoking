@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { isLocale } from "@/i18n";
 import { PROFILE_SELECT, profileFromDb } from "@/lib/profile";
 
 const patchSchema = z.object({
@@ -15,7 +14,6 @@ const patchSchema = z.object({
   pricePerPack: z.number().min(0.01).max(1_000_000).optional(),
   cigarettesPerPack: z.number().int().min(1).max(50).optional(),
   currency: z.enum(["PLN", "EUR"]).optional(),
-  locale: z.enum(["en", "pl"]).optional(),
 });
 
 export async function GET() {
@@ -49,12 +47,21 @@ export async function PATCH(request: Request) {
     pricePerPack?: number;
     cigarettesPerPack?: number;
     currency?: string;
-    locale?: string;
   } = {};
 
   if (parsed.data.quitDate !== undefined) {
-    const quitDate = new Date(parsed.data.quitDate + "T12:00:00");
-    if (quitDate > new Date()) {
+    const [y, m, d] = parsed.data.quitDate.split("-").map(Number);
+    const quitDate = new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
+    const todayUtc = new Date();
+    const todayNoon = Date.UTC(
+      todayUtc.getUTCFullYear(),
+      todayUtc.getUTCMonth(),
+      todayUtc.getUTCDate(),
+      12,
+      0,
+      0,
+    );
+    if (quitDate.getTime() > todayNoon) {
       return NextResponse.json({ error: "Quit date cannot be in the future" }, { status: 400 });
     }
     data.quitDate = quitDate;
@@ -71,10 +78,6 @@ export async function PATCH(request: Request) {
   if (parsed.data.currency !== undefined) {
     data.currency = parsed.data.currency.toUpperCase();
   }
-  if (parsed.data.locale !== undefined && isLocale(parsed.data.locale)) {
-    data.locale = parsed.data.locale;
-  }
-
   const user = await prisma.user.update({
     where: { id: session.user.id },
     data,

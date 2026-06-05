@@ -10,8 +10,11 @@
 | `NEXTAUTH_SECRET` | Vercel (+ локально `.env`) | да | Подпись JWT сессий NextAuth |
 | `NEXTAUTH_URL` | Vercel (+ локально `.env`) | да | Базовый URL сайта для NextAuth |
 | `DATABASE_URL` (и `PG*`) | Railway Postgres | авто | Создаёт плагин Postgres; копируется в Vercel |
+| `ANALYTICS_ENABLED` | Vercel (+ локально `.env`) | нет (включено) | `false` отключает запись page views и product events |
 
-Других переменных для MVP нет. `NODE_ENV` на Vercel выставляется сам.
+Подробно: [admin-analytics.md](admin-analytics.md).
+
+`NODE_ENV` на Vercel выставляется сам.
 
 ## Railway (только БД)
 

@@ -2,7 +2,6 @@ type EmergencyReason = { title: string; body: string };
 
 export type Dictionary = {
   meta: { title: string; description: string };
-  language: { label: string; en: string; pl: string };
   auth: Record<string, string>;
   dashboard: Record<string, string>;
   counter: Record<string, string>;
@@ -46,13 +45,8 @@ export type Dictionary = {
 
 export const en: Dictionary = {
   meta: {
-    title: "fuck smoke — quit tracker",
+    title: "Fuck smoking — quit tracker",
     description: "Track days without nicotine, healing progress, and emergency craving support.",
-  },
-  language: {
-    label: "Language",
-    en: "English",
-    pl: "Polski",
   },
   auth: {
     signIn: "Sign in",
@@ -78,9 +72,9 @@ export const en: Dictionary = {
     primaryActionsAria: "Crisis support actions",
   },
   counter: {
-    label: "Days without nicotine",
+    label: "Smoke-free day",
     footer: "Keep going.",
-    aria: "Days without nicotine",
+    aria: "Smoke-free day",
   },
   health: {
     title: "Your body is healing",

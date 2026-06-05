@@ -20,8 +20,18 @@ export async function PATCH(request: Request) {
   if (!parsed.success) {
     return NextResponse.json({ error: "Invalid date" }, { status: 400 });
   }
-  const quitDate = new Date(parsed.data.quitDate + "T12:00:00");
-  if (quitDate > new Date()) {
+  const [y, m, d] = parsed.data.quitDate.split("-").map(Number);
+  const quitDate = new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
+  const todayUtc = new Date();
+  const todayNoon = Date.UTC(
+    todayUtc.getUTCFullYear(),
+    todayUtc.getUTCMonth(),
+    todayUtc.getUTCDate(),
+    12,
+    0,
+    0,
+  );
+  if (quitDate.getTime() > todayNoon) {
     return NextResponse.json({ error: "Quit date cannot be in the future" }, { status: 400 });
   }
   const user = await prisma.user.update({

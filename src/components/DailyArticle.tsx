@@ -4,8 +4,8 @@ import { useI18n } from "@/components/LocaleProvider";
 import { getContentDayNumber, getDailyArticle } from "@/lib/daily-content";
 
 export function DailyArticle({ days }: { days: number }) {
-  const { locale, t } = useI18n();
-  const article = getDailyArticle(days, locale);
+  const { t } = useI18n();
+  const article = getDailyArticle(days);
   const dayNumber = getContentDayNumber(days);
 
   return (

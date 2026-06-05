@@ -3,11 +3,12 @@
 | Термин | Описание |
 |--------|----------|
 | **Quit date** | Календарный день, с которого пользователь не курит. Хранится в `User.quitDate`. |
-| **Days without nicotine** | Разница в днях между quit date и сегодня (полночь UTC локали браузера для ввода даты). |
+| **Days without nicotine** | Календарные дни с quit date (`quit-date.ts`, дата из `YYYY-MM-DD` без сдвига TZ). |
+| **Smoke-free day (циферблат)** | Номер дня пути: `completedDays + 1` — совпадает с «День N» в цитате/статье. |
 | **Healing progress** | Процент до 365 дней; 4 сегмента бара — вехи 2, 14, 30, 90 дней. |
 | **Emergency** | Режим при тяге: дыхание, цитата, таймер 3:00, тексты «почему не срываться». |
-| **День контента** | `daysWithoutNicotine % 365` → цитата и статья из `src/content/*.{en,pl}.json`. |
-| **Locale** | `en` \| `pl` — UI (`src/i18n/locales/`), дневной контент, поле `User.locale`. |
+| **День контента** | `daysWithoutNicotine % 365` → цитата и статья из `src/content/*.en.json`. |
+| **Locale** | Только `en` — UI (`src/i18n/locales/en.ts`), поле `User.locale` в БД сохраняется, в приложении всегда English. |
 | **Smoking habits** | `cigarettesPerDay`, `pricePerPack`, `cigarettesPerPack` (по умолчанию 20), `currency` (по умолчанию RUB). |
 | **Money saved** | `cigarettesAvoided × (pricePerPack / cigarettesPerPack)`. |
 | **Time saved** | 5 минут на каждую несокуренную сигарету. |

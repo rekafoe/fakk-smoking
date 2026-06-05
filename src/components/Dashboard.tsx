@@ -10,7 +10,6 @@ import { RelapsePanel } from "@/components/RelapsePanel";
 import { BrandLightFlashes } from "@/components/BrandLightFlashes";
 import { GlitchTitle } from "@/components/GlitchTitle";
 import { HealthProgress } from "@/components/HealthProgress";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useI18n } from "@/components/LocaleProvider";
 import { ProfileOnboarding } from "@/components/ProfileOnboarding";
 import { SettingsPanel } from "@/components/SettingsPanel";
@@ -18,7 +17,8 @@ import { CigaretteAccent } from "@/components/CigaretteAccent";
 import { PrimaryActions } from "@/components/PrimaryActions";
 import { SiteFooter } from "@/components/SiteFooter";
 import { StatsPanel } from "@/components/StatsPanel";
-import { daysWithoutNicotine, healingProgress } from "@/lib/healing";
+import { useTodayKey } from "@/hooks/use-today-key";
+import { healingProgress, smokeFreeDayNumber, daysWithoutNicotine } from "@/lib/healing";
 import { hasCompleteProfile } from "@/lib/profile";
 
 export function Dashboard() {
@@ -37,9 +37,14 @@ export function Dashboard() {
     setRelapseLogKey((k) => k + 1);
   }
 
-  const quitDate = session?.user?.quitDate ? new Date(session.user.quitDate) : null;
-  const days = quitDate ? daysWithoutNicotine(quitDate) : 0;
-  const healing = quitDate ? healingProgress(quitDate) : { percent: 0, filledSegments: 0 };
+  useTodayKey();
+
+  const quitDateIso = session?.user?.quitDate ?? null;
+  const completedDays = quitDateIso ? daysWithoutNicotine(quitDateIso) : 0;
+  const displayDay = quitDateIso ? smokeFreeDayNumber(completedDays) : 0;
+  const healing = quitDateIso
+    ? healingProgress(quitDateIso)
+    : { percent: 0, filledSegments: 0 };
 
   return (
     <div className="app-shell app-shell--dashboard">
@@ -51,7 +56,6 @@ export function Dashboard() {
             <GlitchTitle />
           </div>
           <div className="dashboard-header__actions">
-            <LanguageSwitcher />
             <button type="button" className="btn" onClick={() => setSettingsOpen(true)}>
               {t("dashboard.settings")}
             </button>
@@ -67,9 +71,9 @@ export function Dashboard() {
         />
 
         <main className="dashboard-main">
-          <DayCounter days={days} />
+          <DayCounter dayNumber={displayDay} />
           <aside className="dashboard-sidebar">
-            {quitDate ? <DailyQuote days={days} /> : null}
+            {quitDateIso ? <DailyQuote days={completedDays} /> : null}
             <HealthProgress
               percent={healing.percent}
               filledSegments={healing.filledSegments}
@@ -81,7 +85,7 @@ export function Dashboard() {
           <StatsPanel profile={session.user} />
         ) : null}
 
-        {quitDate ? <DailyArticle days={days} /> : null}
+        {quitDateIso ? <DailyArticle days={completedDays} /> : null}
       </div>
 
       <SiteFooter />
@@ -98,7 +102,7 @@ export function Dashboard() {
       <EmergencyPanel
         open={emergencyOpen}
         onClose={() => setEmergencyOpen(false)}
-        days={days}
+        days={completedDays}
         onSlipped={() => {
           setEmergencyOpen(false);
           openRelapsePanel();

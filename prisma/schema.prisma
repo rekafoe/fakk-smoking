@@ -7,22 +7,58 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  USER
+  ADMIN
+}
+
 model User {
-  id                String    @id @default(cuid())
-  email             String    @unique
+  id                String           @id @default(cuid())
+  email             String           @unique
   passwordHash      String
   name              String?
+  role              UserRole         @default(USER)
+  lastSeenAt        DateTime?
   quitDate          DateTime?
   cigarettesPerDay  Int?
   pricePerPack      Float?
-  cigarettesPerPack Int       @default(20)
-  currency          String    @default("PLN")
-  locale            String    @default("en")
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  cigarettesPerPack Int              @default(20)
+  currency          String           @default("PLN")
+  locale            String           @default("en")
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
   accounts          Account[]
   sessions          Session[]
   relapseEvents     RelapseEvent[]
+  pageViews         PageView[]
+  analyticsEvents   AnalyticsEvent[]
+}
+
+model PageView {
+  id        String   @id @default(cuid())
+  path      String
+  userId    String?
+  visitorId String
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@index([path, createdAt])
+  @@index([visitorId, createdAt])
+  @@index([userId, createdAt])
+}
+
+model AnalyticsEvent {
+  id        String   @id @default(cuid())
+  type      String
+  userId    String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@index([type, createdAt])
+  @@index([userId, createdAt])
 }
 
 model RelapseEvent {

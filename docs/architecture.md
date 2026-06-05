@@ -32,6 +32,9 @@ flowchart LR
 | `/api/profile` | GET/PATCH профиля (дата, привычки, валюта) |
 | `/api/profile/quit-date` | Устаревший alias (можно использовать `/api/profile`) |
 | `/api/relapse` | GET — последние срывы; POST — записать срыв (опциональная заметка) |
+| `/admin` | Сводка аналитики (роль `ADMIN`) |
+| `/api/admin/*` | API сводки, пользователей, timeseries |
+| `/api/analytics/event` | Сбор page views и product events |
 
 ## Фон и дым
 
@@ -45,7 +48,13 @@ flowchart LR
 - **Railway** — PostgreSQL, `DATABASE_URL` в Vercel
 - Подробно: [deploy-railway-vercel.md](deploy-railway-vercel.md)
 
+## Админка и аналитика
+
+- Роли: `User.role` (`USER` | `ADMIN`), см. [admin-analytics.md](admin-analytics.md).
+- Таблицы: `PageView`, `AnalyticsEvent`; активность — `User.lastSeenAt`.
+- Middleware: `middleware.ts` защищает `/admin` и `/api/admin/*` (сессия); роль проверяется в API и на странице.
+
 ## Расширение
 
 - OAuth: добавить провайдер в `src/lib/auth.ts`
-- Аналитика тяги: отдельная таблица при открытии emergency (срывы уже в `RelapseEvent`)
+- Экспорт CSV, графики, Vercel Analytics — по желанию поверх своей БД

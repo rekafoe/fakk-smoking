@@ -1,6 +1,7 @@
 import { hash } from "bcryptjs";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { ANALYTICS_EVENT, trackEvent } from "@/lib/analytics";
 import { prisma } from "@/lib/prisma";
 
 const schema = z.object({
@@ -32,6 +33,7 @@ export async function POST(request: Request) {
         name: parsed.data.name?.trim(),
       },
     });
+    await trackEvent(ANALYTICS_EVENT.REGISTER_SUCCESS, user.id);
     return NextResponse.json({ id: user.id, email: user.email }, { status: 201 });
   } catch {
     return NextResponse.json({ error: "Registration failed" }, { status: 500 });

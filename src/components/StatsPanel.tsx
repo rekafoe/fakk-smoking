@@ -10,29 +10,29 @@ import {
 } from "@/lib/savings";
 
 export function StatsPanel({ profile }: { profile: ProfileSnapshot }) {
-  const { locale, t } = useI18n();
+  const { t } = useI18n();
   const stats = computeQuitStats(profile);
   if (!stats) return null;
 
   const items = [
     {
       label: t("stats.moneySaved"),
-      value: formatMoney(stats.moneySaved, profile.currency, locale),
+      value: formatMoney(stats.moneySaved, profile.currency),
       hint: t("stats.moneyHint"),
     },
     {
       label: t("stats.notSmoked"),
-      value: formatCount(stats.cigarettesAvoided, locale),
+      value: formatCount(stats.cigarettesAvoided),
       hint: t("stats.notSmokedHint"),
     },
     {
       label: t("stats.timeSaved"),
-      value: formatDuration(stats.timeSavedMinutes, locale),
+      value: formatDuration(stats.timeSavedMinutes),
       hint: t("stats.timeHint"),
     },
     {
       label: t("stats.lifeReclaimed"),
-      value: formatDuration(stats.lifeReclaimedMinutes, locale),
+      value: formatDuration(stats.lifeReclaimedMinutes),
       hint: t("stats.lifeHint"),
     },
   ];

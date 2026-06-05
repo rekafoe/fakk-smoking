@@ -24,8 +24,8 @@ export function EmergencyPanel({
   days: number;
   onSlipped?: () => void;
 }) {
-  const { locale, dict, t } = useI18n();
-  const quote = useMemo(() => getDailyQuote(days, locale), [days, locale]);
+  const { dict, t } = useI18n();
+  const quote = useMemo(() => getDailyQuote(days), [days]);
   const [secondsLeft, setSecondsLeft] = useState(CRISIS_SECONDS);
 
   const breathingCycle = useMemo(
@@ -40,6 +40,11 @@ export function EmergencyPanel({
   useEffect(() => {
     if (!open) return;
     setSecondsLeft(CRISIS_SECONDS);
+    void fetch("/api/analytics/event", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ kind: "emergency_open" }),
+    });
   }, [open]);
 
   useEffect(() => {
@@ -62,8 +67,8 @@ export function EmergencyPanel({
   if (!open) return null;
 
   return (
-    <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="emergency-title">
-      <div className="modal-panel glass-card">
+    <div className="modal-overlay modal-overlay--sheet" role="dialog" aria-modal="true" aria-labelledby="emergency-title">
+      <div className="modal-panel modal-panel--sheet modal-panel--crisis glass-card">
         <div className="modal-panel__header">
           <h2 id="emergency-title" className="modal-panel__title">
             {t("emergency.title")}
@@ -73,30 +78,31 @@ export function EmergencyPanel({
           </button>
         </div>
 
-        <p className="breathing-guide">{t("emergency.breathingGuide")}</p>
-        <BreathingExercise active={open} cycle={breathingCycle} />
-
-        <blockquote className="crisis-motivation">{quote}</blockquote>
-
-        <div className="crisis-timer">
-          <div className="crisis-timer__value">{formatTime(secondsLeft)}</div>
-          <p className="crisis-timer__label">{t("emergency.timerLabel")}</p>
+        <div className="modal-panel__body">
+          <p className="breathing-guide">{t("emergency.breathingGuide")}</p>
+          <BreathingExercise active={open} cycle={breathingCycle} />
+          <blockquote className="crisis-motivation">{quote}</blockquote>
+          <ul className="crisis-reasons">
+            {dict.emergency.reasons.map((item: { title: string; body: string }) => (
+              <li key={item.title}>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <ul className="crisis-reasons">
-          {dict.emergency.reasons.map((item: { title: string; body: string }) => (
-            <li key={item.title}>
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-            </li>
-          ))}
-        </ul>
-
-        {onSlipped ? (
-          <button type="button" className="btn relapse-section__cta" onClick={onSlipped}>
-            {t("emergency.slipped")}
-          </button>
-        ) : null}
+        <div className="modal-panel__footer">
+          <div className="crisis-timer">
+            <div className="crisis-timer__value">{formatTime(secondsLeft)}</div>
+            <p className="crisis-timer__label">{t("emergency.timerLabel")}</p>
+          </div>
+          {onSlipped ? (
+            <button type="button" className="btn relapse-section__cta" onClick={onSlipped}>
+              {t("emergency.slipped")}
+            </button>
+          ) : null}
+        </div>
       </div>
     </div>
   );

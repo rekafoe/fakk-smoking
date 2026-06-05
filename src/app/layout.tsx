@@ -22,7 +22,7 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "fuck smoke — quit tracker",
+  title: "Fuck smoking — quit tracker",
   description: "Track days without nicotine, healing progress, and emergency craving support.",
 };
 

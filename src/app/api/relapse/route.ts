@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { ANALYTICS_EVENT, trackEvent } from "@/lib/analytics";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { relapseFromDb } from "@/lib/relapse";
@@ -58,6 +59,8 @@ export async function POST(request: Request) {
     }),
     prisma.relapseEvent.count({ where: { userId: session.user.id } }),
   ]);
+
+  await trackEvent(ANALYTICS_EVENT.RELAPSE_LOGGED, session.user.id);
 
   return NextResponse.json({
     event: relapseFromDb(event),
